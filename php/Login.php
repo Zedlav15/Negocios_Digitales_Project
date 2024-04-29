@@ -1,34 +1,43 @@
 <?php
-    include 'Conexion.php';
+include 'Conexion.php';
 
-    session_start();
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-    if(isset($_POST['ingUser']) && isset($_POST['ingPass'])){
-        $username = $_POST['ingUser'];
-        $password = $_POST['ingPass'];
+header('Content-Type: application/json');  // Establece que la salida debe ser JSON
 
-        $consulta = mysqli_query($conexion, "SELECT * FROM whatsapp_usuario WHERE usuario = '$username' AND contrasena = '$password'");
-        $result = mysqli_fetch_assoc($consulta);
+session_start();
 
-        if(mysqli_num_rows($consulta) > 0){
-            $_SESSION['user'] = $username;
-            $rol = $result['rol'];
-            $_SESSION['rol'] = $rol;
-            $change = mysqli_query($conexion, "UPDATE whatsapp_usuario SET statusData = 1 WHERE usuario = '$username'");
-            switch($_SESSION['rol']){
-                case 1:
-                    header("location: ../html/supervisor.html");
-                    break;
-                case 2:
-                    header("location: ../html/colab_copy.html");
-                    break;
-            }
-        }
-        else{
-            echo '<script>
-                    alert("Usuario no existe, por favor verifique los datos introducidos");
-                    window.location = "../index.html";
-                </script>';
-            exit;
-        }
+// Chequear conexión
+if ($conexion->connect_error) {
+    echo json_encode(['success' => false, 'message' => 'Fallo de conexión: ' . $conexion->connect_error]);
+    exit();  // Detiene la ejecución del script
+}
+
+$username = $_POST['username'];
+$password = $_POST['pass'];  // Captura la contraseña sin aplicar real_escape_string()
+
+// Preparar la consulta para buscar el usuario por username (correo)
+$stmt = $conexion->prepare("SELECT contrasena FROM usuario WHERE correo = ?");
+if (!$stmt) {
+    echo json_encode(['success' => false, 'message' => 'Error de preparación: ' . $conexion->error]);
+    exit();
+}
+
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($row = $result->fetch_assoc()) {
+    if ($password === $row['contrasena']) {
+        echo json_encode(['success' => true]);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Usuario o contraseña incorrectos.']);
     }
+} else {
+    echo json_encode(['success' => false, 'message' => 'No se encontró el usuario.']);
+}
+
+$stmt->close();
+$conexion->close();
+

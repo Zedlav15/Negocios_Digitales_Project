@@ -230,7 +230,7 @@ iframe {
   height: 100%;
   top: 0;
   left: 0;
-  background-color: rgba(54,84,99,0.7);
+  background-color: #a0967d;
 }
 
 
@@ -310,7 +310,7 @@ iframe {
   -moz-transition: all 0.6s;
   transition: all 0.6s;
 
-  background: #57b846;
+  background: #a0967d;
 }
 
 
@@ -402,7 +402,7 @@ input.input100 {
   padding: 0 20px;
   min-width: 160px;
   height: 50px;
-  background-color: #57b846;
+  background-color: #a0967d;
   border-radius: 25px;
 
   font-family: Poppins-Regular;
