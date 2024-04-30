@@ -1,16 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrito de compras</title>
-    <meta name="keywords" content="tailwind,tailwindcss,tailwind css,css,starter template,free template,store template, shop layout, minimal, monochrome, minimalistic, theme, nordic">
-    
-    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>
-	
-    <link href="https://fonts.googleapis.com/css?family=Work+Sans:200,400&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle del Producto</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <p>Este es el carrito</p>
+<body class="bg-gray-300">
+  <div class="container mx-auto p-4">
+    <div class="flex flex-col md:flex-row items-center bg-white shadow-lg rounded-lg overflow-hidden">
+
+      <!-- Contenedor de la imagen del producto -->
+      <div class="md:flex md:w-1/2">
+        <img src="https://images.unsplash.com/photo-1508423134147-addf71308178?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&h=400&q=80" alt="Lente para cámara" class="object-contain h-48 w-full md:h-auto">
+      </div>
+
+      <!-- Detalles del producto -->
+      <div class="p-4 md:w-1/2">
+        <h2 class="text-2xl font-semibold mb-2">Lente para cámara</h2>
+        <p class="text-gray-600 mb-4">Una descripción corta pero significativa del lente, destacando sus características más notables.</p>
+        <p class="text-lg font-medium text-gray-900 mb-4">£9.99</p>
+        <div class="mb-6">
+          <label for="quantity" class="block text-sm font-medium text-gray-700">Cantidad:</label>
+          <input type="number" id="quantity" name="quantity" min="1" value="1" class="form-input w-full text-center">
+        </div>
+        <button class="bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded">
+          Agregar al carrito
+        </button>
+        <button class="bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded" onclick="window.location.href='https://buy.stripe.com/test_14kaGha0e3tRdna8wx';">
+            Comprar ahora
+          </button>
+      </div>
+
+    </div>
+  </div>
 </body>
 </html>
